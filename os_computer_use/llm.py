@@ -13,7 +13,7 @@ load_dotenv()
 OSATLAS_HUGGINGFACE_SOURCE = "maxiw/OS-ATLAS"
 OSATLAS_HUGGINGFACE_MODEL = "OS-Copilot/OS-Atlas-Base-7B"
 OSATLAS_HUGGINGFACE_API = "/run_example"
-LLAMA_32_OPENROUTER_MODEL = "meta-llama/llama-3.2-90b-vision-instruct"
+LLAMA_32_OPENROUTER_MODEL = "gemini-2.0-flash-exp"
 LLAMA_33_FIREWORKS_MODEL = "accounts/fireworks/models/llama-v3p3-70b-instruct"
 
 
@@ -46,12 +46,15 @@ def create_llama_function_list(definitions):
 
 
 fireworks.client.api_key = os.getenv("FIREWORKS_API_KEY")
-llama_vision = OpenAI(
-    base_url="https://openrouter.ai/api/v1",
-    api_key=os.getenv("OPENROUTER_API_KEY"),
+fireworks = OpenAI (
+base_url="https://generativelanguage.googleapis.com/v1beta/openai/",
+api_key=os-getenv("FIREWORKS_API_KEY"),
 )
-osatlas = Client(OSATLAS_HUGGINGFACE_SOURCE)
-
+llama_vision = OpenAI(
+base_url="https://generativelanguage.googleapis.com/vlbeta/openai/", 
+api_key=os-getenv ("'OPENROUTER_API_KEY"),
+)
+osatlas = Client (OSATLAS_HUGGINGFACE_SOURCE)
 
 def call_vision_model(messages):
     completion = llama_vision.chat.completions.create(
@@ -61,7 +64,7 @@ def call_vision_model(messages):
 
 
 def call_action_model(messages, functions):
-    completion = fireworks.client.ChatCompletion.create(
+    completion = fireworks.client.chat.completions.create(
         model=LLAMA_33_FIREWORKS_MODEL,
         messages=messages,
         tools=create_llama_function_list(functions),
